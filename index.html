@@ -271,34 +271,43 @@
 
   .pack-slots{margin-top:20px;}
 
-  .pet-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:14px;}
-  .pet-card{
-    background:var(--panel); border:2px solid var(--ink); border-radius:8px; overflow:hidden;
-    cursor:pointer; transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-    position:relative;
+  /* Full group image with clickable pet regions */
+  .pack-pet-stage{position:relative; width:100%; border:2px solid var(--ink); border-radius:8px; overflow:hidden; background:var(--panel-2); box-shadow:4px 4px 0 var(--ink);}
+  .pack-pet-img{display:block; width:100%; height:auto;}
+  .pack-pet-stage .quality-filter{display:block; width:100%; height:auto;}
+  .pet-hotspot{position:absolute; cursor:pointer; border:2px solid transparent; border-radius:6px; transition:border-color .15s, box-shadow .15s, transform .15s; box-sizing:border-box;}
+  .pet-hotspot:hover{border-color:rgba(255,199,0,0.6); box-shadow:0 0 12px rgba(255,199,0,0.3);}
+  .pet-hotspot.selected{border-color:var(--yellow); box-shadow:0 0 16px rgba(255,199,0,0.45);}
+  .pet-hotspot.selected::before{
+    content:""; position:absolute; inset:0; border-radius:4px;
+    background:radial-gradient(circle at center, rgba(255,199,0,0.2) 0%, transparent 70%);
+    pointer-events:none;
   }
-  .pet-card:hover{transform:translateY(-3px); box-shadow:0 6px 16px rgba(0,0,0,0.12);}
-  .pet-card.selected{transform:translateY(-5px); box-shadow:0 8px 20px rgba(0,0,0,0.2);}
 
-  .pet-card-img-wrap{position:relative; width:100%; aspect-ratio:1; background:var(--panel-2); overflow:hidden; border-bottom:2px solid var(--ink);}
-  .pet-card-img{width:100%; height:100%; object-fit:contain; padding:6px; position:relative; z-index:1;}
-  .pet-card-bg{position:absolute; top:0; left:0; width:100%; height:100%; background-repeat:no-repeat; z-index:1;}
-
-  .pet-card-info{padding:8px 10px 12px;}
-  .rarity-badge{
+  /* Readout panel below image */
+  .pet-readout{
+    margin-top:16px; background:var(--panel); border:2px solid var(--ink); border-radius:8px;
+    box-shadow:4px 4px 0 var(--ink); padding:20px 24px; display:none; position:relative;
+  }
+  .pet-readout.show{display:block;}
+  .pet-readout-head{display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap;}
+  .pet-readout-name{font-family:'Anton', sans-serif; text-transform:uppercase; font-size:1.3rem; letter-spacing:1px;}
+  .pet-readout-rarity{
     display:inline-block; font-family:'JetBrains Mono', monospace; font-weight:700;
-    font-size:0.58rem; letter-spacing:0.5px; text-transform:uppercase;
-    padding:2px 8px; border-radius:3px; margin-bottom:6px;
+    font-size:0.68rem; letter-spacing:0.5px; text-transform:uppercase;
+    padding:3px 10px; border-radius:4px;
   }
-  .pet-card-name{font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.3px; line-height:1.2; margin-bottom:4px;}
-  .pet-card-stats{font-family:'JetBrains Mono', monospace; font-size:0.6rem; color:var(--ink-dim); line-height:1.4; margin-bottom:2px;}
-  .pet-card-odds{font-family:'JetBrains Mono', monospace; font-size:0.6rem; color:var(--ink-dim);}
-
-  .rainbow-overlay{
-    position:absolute; inset:0; pointer-events:none; z-index:2;
-    background:linear-gradient(135deg,rgba(255,95,109,0.3),rgba(255,195,113,0.3),rgba(246,243,122,0.3),rgba(74,222,128,0.3),rgba(56,189,248,0.3),rgba(129,140,248,0.3),rgba(192,132,252,0.3));
-    mix-blend-mode:color;
+  .pet-readout-quality{
+    font-family:'JetBrains Mono', monospace; font-size:0.62rem; letter-spacing:1px; text-transform:uppercase;
+    padding:3px 8px; border-radius:3px; color:var(--ink-dim); background:var(--panel-2);
   }
+  .pet-readout-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:12px;}
+  .pet-readout-stat{
+    background:var(--panel-2); border:1px solid var(--line); border-radius:6px; padding:12px 16px;
+  }
+  .pet-readout-stat .label{font-family:'JetBrains Mono', monospace; font-size:0.58rem; text-transform:uppercase; letter-spacing:0.5px; color:var(--ink-dim); margin-bottom:4px;}
+  .pet-readout-stat .value{font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:1.1rem;}
+  .pet-readout-hint{text-align:center; color:var(--ink-dim); font-family:'JetBrains Mono', monospace; font-size:0.72rem; padding:20px 0; text-transform:uppercase; letter-spacing:1px;}
 
   /* Placeholders for packs without real data */
   .pack-slot{border:1px dashed var(--ink-dim); padding:14px 10px; text-align:center; background:var(--bg); position:relative;}
@@ -351,13 +360,12 @@
   .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
   /* ===== CENTERED GLOW EFFECT ON SELECTED/HOVERED CARDS ===== */
   /* Ensure card-like elements can anchor the glow pseudo-element */
-  .stat, .loop-step, .pack-card, .result-card, .code-card, .tip,
-  .pet-card {
+  .stat, .loop-step, .pack-card, .result-card, .code-card, .tip {
     position:relative;
   }
   /* Radial glow emanating from the center of each card */
   .stat::before, .loop-step::before, .pack-card::before, .result-card::before,
-  .code-card::before, .tip::before, .pet-card::before {
+  .code-card::before, .tip::before {
     content:"";
     position:absolute;
     top:50%; left:50%;
@@ -371,18 +379,17 @@
   }
   /* Show glow on hover for interactive cards */
   .stat:hover::before, .pack-card:hover::before, .code-card:hover::before,
-  .tip:hover::before, .pet-card:hover::before {
+  .tip:hover::before {
     opacity:1;
   }
   /* Show glow on active/selected states */
-  .pack-card.active::before, .pet-card.selected::before,
-  .result-card.ready::before, .result-card.short::before {
+  .pack-card.active::before, .result-card.ready::before, .result-card.short::before {
     opacity:1;
   }
   /* Raise text content above the glow layer */
   .stat > *, .loop-step > *, .pack-card > *, .result-card > *,
   .code-card > .code, .code-card > .desc, .code-card > .hint,
-  .tip > *, .pet-card > * {
+  .tip > * {
     position:relative; z-index:1;
   }
   /* Button-style elements get a box-shadow glow (text has no wrapper to z-index) */
@@ -401,8 +408,7 @@
   /* Dark theme: slightly brighter glow for visibility on dark backgrounds */
   [data-theme="dark"] .stat::before, [data-theme="dark"] .loop-step::before,
   [data-theme="dark"] .pack-card::before, [data-theme="dark"] .result-card::before,
-  [data-theme="dark"] .code-card::before, [data-theme="dark"] .tip::before,
-  [data-theme="dark"] .pet-card::before {
+  [data-theme="dark"] .code-card::before, [data-theme="dark"] .tip::before {
     background:radial-gradient(circle at center, rgba(255,210,63,0.3) 0%, rgba(255,106,69,0.1) 35%, transparent 60%);
   }
 
@@ -1527,55 +1533,66 @@ let selectedCardIndex = null;
 
 function renderPackSlots(info, quality){
   const filter = QUALITY_FILTERS[quality] || "none";
+  const imgStyle = quality === "Rainbow" ? '' : ` style="filter:${filter};"`;
+  const classAttr = quality === "Rainbow" ? ' class="quality-filter"' : ' class="quality-filter"';
 
-  const grid = info.cards.map((c, i) => {
+  // Build clickable hotspot overlays on the full group image
+  const hotspots = info.cards.map((c, i) => {
+    const h = c.hotspot;
+    if(!h) return '';
+    const selected = selectedCardIndex === i;
+    return `<div class="pet-hotspot${selected ? ' selected' : ''}" data-card-index="${i}"
+      style="left:${h.left}%; top:${h.top}%; width:${h.width}%; height:${h.height}%;"
+      title="${c.name}"></div>`;
+  }).join('');
+
+  // Build readout panel for selected pet (or hint text)
+  let readoutHtml;
+  if(selectedCardIndex !== null && info.cards[selectedCardIndex]){
+    const c = info.cards[selectedCardIndex];
     const rc = RARITY_COLORS[c.rarity] || RARITY_COLORS.Common;
     const { stats, odds } = formatCardStats(c, quality);
-    const selected = selectedCardIndex === i;
-
-    // Use background-image cropping from the group image if available
-    let imgHtml;
-    if(info.fullImage && c.hotspot){
-      const h = c.hotspot;
-      const bgFilter = quality === "Rainbow" ? 'none' : filter;
-      const rainbowOverlay = quality === "Rainbow" ? `<div class="rainbow-overlay"></div>` : '';
-      imgHtml = `
-        <div class="pet-card-bg" style="background-image:url('${info.fullImage}'); background-size:${10000/h.width}% ${10000/h.height}%; background-position:${h.left/(100-h.width)*100}% ${h.top/(100-h.height)*100}%; filter:${bgFilter};"></div>
-        ${rainbowOverlay}
-      `;
-    } else {
-      const imgFilter = quality === "Rainbow" ? '' : ` style="filter:${filter};"`;
-      const rainbowOverlay = quality === "Rainbow" ? `<div class="rainbow-overlay"></div>` : '';
-      const iconHtml = c.img
-        ? `<img src="${c.img}" alt="${c.name}" class="pet-card-img"${imgFilter}>`
-        : `<div class="pack-slot-icon">🐾</div>`;
-      imgHtml = `${iconHtml}${rainbowOverlay}`;
-    }
-
-    return `
-      <div class="pet-card${selected ? ' selected' : ''}" data-card-index="${i}"${selected ? ` style="border-color:${rc.bg};"` : ''}>
-        <div class="pet-card-img-wrap">
-          ${imgHtml}
+    const qualityColor = QUALITY_COLORS[quality] || QUALITY_COLORS.Normal;
+    readoutHtml = `
+      <div class="pet-readout show">
+        <div class="pet-readout-head">
+          <span class="pet-readout-rarity" style="background:${rc.bg}; color:${rc.text};">${c.rarity}</span>
+          <span class="pet-readout-name">${c.name}</span>
+          <span class="pet-readout-quality" style="background:${qualityColor.bg}; color:${qualityColor.text};">${quality}</span>
         </div>
-        <div class="pet-card-info">
-          <span class="rarity-badge" style="background:${rc.bg}; color:${rc.text};">${c.rarity}</span>
-          <div class="pet-card-name">${c.name}</div>
-          <div class="pet-card-stats">${stats}</div>
-          <div class="pet-card-odds">${odds}</div>
+        <div class="pet-readout-stat">
+          <div class="label">Multipliers</div>
+          <div class="value">${stats}</div>
+        </div>
+        <div class="pet-readout-stat" style="margin-top:12px;">
+          <div class="label">Drop Rate</div>
+          <div class="value">${odds}</div>
         </div>
       </div>
     `;
-  }).join('');
+  } else {
+    readoutHtml = `<div class="pet-readout-hint">👆 Click a pet on the image to see its stats</div>`;
+  }
 
-  return `<div class="pet-grid">${grid}</div>`;
+  if(info.fullImage){
+    return `
+      <div class="pack-pet-stage">
+        <img src="${info.fullImage}" alt="${info.name} pets"${imgStyle}${classAttr}>
+        ${hotspots}
+      </div>
+      <div id="petReadout">${readoutHtml}</div>
+    `;
+  }
+  // Fallback for placeholder packs
+  return `<div class="pet-readout-hint">Pet images not available for this pack yet.</div>`;
 }
 
 function wirePackSlotClicks(packNum){
   const container = document.getElementById('packSlots');
   if(!container) return;
-  container.querySelectorAll('.pet-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const idx = parseInt(card.dataset.cardIndex, 10);
+  container.querySelectorAll('.pet-hotspot').forEach(spot => {
+    spot.addEventListener('click', () => {
+      const idx = parseInt(spot.dataset.cardIndex, 10);
       selectedCardIndex = (selectedCardIndex === idx) ? null : idx;
       const info = PACK_DATA[packNum];
       container.innerHTML = renderPackSlots(info, currentPackQuality);
@@ -1630,7 +1647,7 @@ function showPackDetail(packNum){
     titleHtml = info.cover
       ? `<img src="${info.cover}" alt="${info.name}" class="pack-detail-cover">${info.name}`
       : `${info.icon} ${info.name}`;
-    introHtml = `Costs ${info.cost} to open. Tap a pet to see its stats, rarity, and odds — pick a quality below to update them all.`;
+    introHtml = `Costs ${info.cost} to open. Click a pet on the image to see its stats. Pick a quality below to update all pets.`;
     slotsHtml = renderPackSlots(info, currentPackQuality);
     qualityHtml = `<div class="quality-selector" id="qualitySelector">${renderQualitySelector(packNum)}</div>`;
   } else {
