@@ -275,9 +275,9 @@
   .pack-pet-stage{position:relative; width:100%; border:2px solid var(--ink); border-radius:8px; overflow:hidden; background:var(--panel-2); box-shadow:4px 4px 0 var(--ink);}
   .pack-pet-img{display:block; width:100%; height:auto;}
   .pack-pet-stage .quality-filter{display:block; width:100%; height:auto;}
-  .pet-hotspot{position:absolute; cursor:pointer; border:2px solid transparent; border-radius:6px; transition:border-color .15s, box-shadow .15s, transform .15s; box-sizing:border-box;}
-  .pet-hotspot:hover{border-color:rgba(255,199,0,0.6); box-shadow:0 0 12px rgba(255,199,0,0.3);}
-  .pet-hotspot.selected{border-color:var(--yellow); box-shadow:0 0 16px rgba(255,199,0,0.45);}
+  .pet-hotspot{position:absolute; cursor:pointer; border-radius:6px; transition:outline-color .15s, box-shadow .15s; outline:2px solid transparent; outline-offset:0;}
+  .pet-hotspot:hover{outline-color:rgba(255,199,0,0.6); box-shadow:0 0 12px rgba(255,199,0,0.3);}
+  .pet-hotspot.selected{outline-color:var(--yellow); box-shadow:0 0 16px rgba(255,199,0,0.45);}
   .pet-hotspot.selected::before{
     content:""; position:absolute; inset:0; border-radius:4px;
     background:radial-gradient(circle at center, rgba(255,199,0,0.2) 0%, transparent 70%);
