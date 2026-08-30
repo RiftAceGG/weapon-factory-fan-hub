@@ -235,114 +235,75 @@
   .result-card.short{border-color:var(--orange); background:var(--tint-orange);}
 
   /* CARD PACKS */
-  .pack-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(130px,1fr)); gap:14px; margin-top:36px;}
+  .pack-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:16px; margin-top:36px;}
   .pack-card{
-    border:2px solid var(--ink); background:var(--panel); padding:20px 12px; text-align:center;
-    cursor:pointer; box-shadow:4px 4px 0 var(--ink); transition:transform .12s, box-shadow .12s;
-    font-family:'Barlow Condensed', sans-serif; color:var(--ink);
+    border:2px solid var(--ink); background:var(--panel); border-radius:8px; overflow:hidden;
+    cursor:pointer; box-shadow:4px 4px 0 var(--ink); transition:transform .15s ease, box-shadow .15s ease;
+    text-align:left; position:relative;
   }
   .pack-card:hover{transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--ink);}
-  .pack-card.active{background:var(--tint-yellow); border-color:var(--orange);}
-  .pack-icon{font-size:1.9rem; margin-bottom:8px;}
-  .pack-cover-img{width:70px; height:auto; margin:0 auto 8px; display:block; border-radius:6px;}
-  .pack-detail-cover{width:32px; height:auto; vertical-align:middle; margin-right:8px; border-radius:4px;}
-  .pack-name{font-weight:700; text-transform:uppercase; letter-spacing:0.5px; font-size:0.92rem;}
+  .pack-card.active{border-color:var(--yellow); box-shadow:6px 6px 0 var(--ink), 0 0 0 2px var(--yellow);}
+  .pack-cover-wrap{aspect-ratio:16/10; overflow:hidden; border-bottom:2px solid var(--ink); background:var(--panel-2);}
+  .pack-cover-img{width:100%; height:100%; object-fit:cover; display:block;}
+  .pack-icon{font-size:2rem; text-align:center; padding:16px 0 8px;}
+  .pack-card-body{padding:10px 12px 14px;}
+  .pack-name{font-family:'Barlow Condensed', sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; font-size:0.92rem; line-height:1.2;}
   .pack-sub{font-family:'JetBrains Mono', monospace; font-size:0.64rem; color:var(--ink-dim); margin-top:4px; text-transform:uppercase; letter-spacing:0.5px;}
+  .pack-pet-count{font-family:'JetBrains Mono', monospace; font-size:0.6rem; color:var(--ink-dim); margin-top:2px;}
+  .pack-detail-cover{width:40px; height:40px; border-radius:6px; object-fit:cover; border:2px solid var(--ink);}
 
-  .pack-detail{margin-top:30px; background:var(--panel); border:2px solid var(--ink); box-shadow:6px 6px 0 var(--ink); padding:24px; display:none;}
+  .pack-detail{margin-top:30px; background:var(--panel); border:2px solid var(--ink); border-radius:8px; box-shadow:6px 6px 0 var(--ink); padding:24px; display:none;}
   .pack-detail.show{display:block;}
-  .pack-detail-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap;}
-  .quality-selector{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;}
+  .pack-detail-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; margin-bottom:20px;}
+  .pack-detail-head h3{font-family:'Anton', sans-serif; text-transform:uppercase; font-size:1.5rem; display:flex; align-items:center; gap:10px;}
+  .close-detail{background:var(--bg); border:2px solid var(--ink); color:var(--ink); width:34px; height:34px; cursor:pointer; font-family:'Anton', sans-serif; font-size:1.1rem; flex:0 0 auto; transition:background .12s, color .12s;}
+  .close-detail:hover{background:var(--orange); color:#fff; border-color:var(--orange);}
+
+  .quality-selector{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;}
   .quality-btn{
-    border:2px solid var(--ink); padding:8px 16px; cursor:pointer;
+    border:2px solid var(--ink); padding:6px 14px; border-radius:4px; cursor:pointer;
     font-family:'Barlow Condensed', sans-serif; font-weight:700; text-transform:uppercase;
-    letter-spacing:0.5px; font-size:0.82rem; transition:transform .12s, box-shadow .12s;
+    letter-spacing:0.5px; font-size:0.78rem; transition:transform .12s, box-shadow .12s;
     box-shadow:2px 2px 0 var(--ink);
   }
-  .quality-btn:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--ink);}
-  .quality-btn.active{box-shadow:0 0 0 3px var(--ink) inset, 3px 3px 0 var(--ink);}
-  .pack-detail-head h3{font-family:'Anton', sans-serif; text-transform:uppercase; font-size:1.5rem;}
-  .close-detail{
-    background:var(--bg); border:2px solid var(--ink); color:var(--ink); width:34px; height:34px;
-    cursor:pointer; font-family:'Anton', sans-serif; font-size:1.1rem; flex:0 0 auto;
-    transition:background .12s, color .12s;
+  .quality-btn:hover{transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--ink);}
+  .quality-btn.active{transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--ink), 0 0 0 2px var(--yellow);}
+
+  .pack-slots{margin-top:20px;}
+
+  .pet-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:14px;}
+  .pet-card{
+    background:var(--panel); border:2px solid var(--ink); border-radius:8px; overflow:hidden;
+    cursor:pointer; transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    position:relative;
   }
-  .close-detail:hover{background:var(--orange); color:#fff; border-color:var(--orange);}
-  .pack-slots{
-    margin-top:18px; padding:20px; border-radius:20px;
-    background:linear-gradient(160deg, #b083e0 0%, #7fa6e6 100%);
-    border:2px solid rgba(255,255,255,0.35);
+  .pet-card:hover{transform:translateY(-3px); box-shadow:0 6px 16px rgba(0,0,0,0.12);}
+  .pet-card.selected{transform:translateY(-5px); box-shadow:0 8px 20px rgba(0,0,0,0.2);}
+
+  .pet-card-img-wrap{position:relative; width:100%; aspect-ratio:1; background:var(--panel-2); overflow:hidden; border-bottom:2px solid var(--ink);}
+  .pet-card-img{width:100%; height:100%; object-fit:contain; padding:6px; position:relative; z-index:1;}
+
+  .pet-card-info{padding:8px 10px 12px;}
+  .rarity-badge{
+    display:inline-block; font-family:'JetBrains Mono', monospace; font-weight:700;
+    font-size:0.58rem; letter-spacing:0.5px; text-transform:uppercase;
+    padding:2px 8px; border-radius:3px; margin-bottom:6px;
   }
-  .pet-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(76px,1fr)); gap:14px;}
-  .pet-image-wrap{position:relative; width:100%; max-width:680px; margin:0 auto; line-height:0;}
-  .pet-full-image{width:100%; height:auto; display:block; border-radius:16px; box-shadow:0 4px 24px rgba(0,0,0,0.08);}
-  .pet-hotspot{position:absolute; cursor:pointer;}
-  .pet-hotspot:hover{background:rgba(255,255,255,0.04);}
-  .pet-hotspot::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background-image:var(--bg-img);
-    background-size:var(--bg-size-x) var(--bg-size-y);
-    background-position:var(--bg-pos-x) var(--bg-pos-y);
-    filter:var(--pet-filter, none);
-    opacity:0;
-    transform:scale(1) translateY(0);
-    transition:transform .25s ease, opacity .2s ease, box-shadow .25s ease;
-    pointer-events:none;
-    z-index:5;
-  }
-  .pet-hotspot:hover::before{
-    opacity:1;
-    transform:scale(1.02) translateY(-2px);
-    box-shadow:0 3px 10px rgba(0,0,0,0.15);
-  }
-  .pet-hotspot.selected::before{
-    opacity:1;
-    transform:scale(1.05) translateY(-5px);
-    box-shadow:0 8px 20px rgba(0,0,0,0.25), 0 0 12px rgba(255,199,0,0.2);
-  }
-  .pet-tile{
-    cursor:pointer; border-radius:10px; padding:3px; transition:transform .12s;
-    display:flex; align-items:center; justify-content:center;
-    aspect-ratio:1/1;
-  }
-  .pet-tile:hover{transform:translateY(-3px) scale(1.05);}
-  .pet-readout-wrap{margin-top:16px;}
-  .pet-readout-empty{
-    font-family:'JetBrains Mono', monospace; font-size:0.76rem; color:rgba(255,255,255,0.85);
-    text-align:center; padding:14px; background:rgba(0,0,0,0.18); border-radius:12px;
-  }
-  .pet-readout{
-    background:rgba(20,20,30,0.55); border:2px solid var(--ink-dim); border-radius:14px;
-    padding:14px 16px; text-align:center;
-  }
-  .pet-readout-name{font-family:'Anton', sans-serif; font-size:1.1rem; color:#fff; margin-top:6px; letter-spacing:0.5px;}
-  .pack-slot{border:1px dashed var(--ink-dim); padding:14px 10px; text-align:center; background:var(--bg); position:relative;}
-  .pack-slot.real{border:2px solid var(--ink-dim); padding-bottom:20px; overflow:hidden; transition:transform .12s;}
-  .pack-slot.real:hover{transform:translateY(-2px);}
-  .pack-slot-badge{
-    display:inline-block; font-family:'JetBrains Mono', monospace; font-weight:700; font-size:0.6rem;
-    letter-spacing:0.5px; text-transform:uppercase; padding:3px 8px; margin-bottom:8px;
-  }
-  .pack-slot-icon{font-size:1.5rem;}
-  .pack-slot-img{width:64px; height:64px; object-fit:contain; margin:6px auto 0; display:block; position:relative; z-index:1;}
-  .pack-slot-img-wrap{position:relative; width:64px; height:64px; margin:6px auto 0;}
-  .pack-slot-img-wrap .pack-slot-img{margin:0; width:100%; height:100%;}
+  .pet-card-name{font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.3px; line-height:1.2; margin-bottom:4px;}
+  .pet-card-stats{font-family:'JetBrains Mono', monospace; font-size:0.6rem; color:var(--ink-dim); line-height:1.4; margin-bottom:2px;}
+  .pet-card-odds{font-family:'JetBrains Mono', monospace; font-size:0.6rem; color:var(--ink-dim);}
+
   .rainbow-overlay{
     position:absolute; inset:0; pointer-events:none; z-index:2;
-    background:linear-gradient(135deg,#ff5f6d,#ffc371,#f6f37a,#4ade80,#38bdf8,#818cf8,#c084fc);
-    mix-blend-mode:color; opacity:0.9;
+    background:linear-gradient(135deg,rgba(255,95,109,0.3),rgba(255,195,113,0.3),rgba(246,243,122,0.3),rgba(74,222,128,0.3),rgba(56,189,248,0.3),rgba(129,140,248,0.3),rgba(192,132,252,0.3));
+    mix-blend-mode:color;
   }
+
+  /* Placeholders for packs without real data */
+  .pack-slot{border:1px dashed var(--ink-dim); padding:14px 10px; text-align:center; background:var(--bg); position:relative;}
+  .pack-slot-icon{font-size:1.5rem;}
   .pack-slot-name{font-weight:700; font-size:0.82rem;}
-  .pack-slot-stats{font-family:'JetBrains Mono', monospace; font-size:0.64rem; color:var(--green); margin-top:8px;}
-  .pack-slot-rarity{font-family:'JetBrains Mono', monospace; font-size:0.78rem; font-weight:700; color:#000000; margin-top:6px; text-transform:uppercase; letter-spacing:0.3px; text-shadow:0 0 4px rgba(255,255,255,0.9), 0 0 2px rgba(255,255,255,0.9);}
-  .pack-slot-foot{position:absolute; left:0; right:0; bottom:0; height:6px;}
-  .pack-slot-tap-hint{
-    font-family:'JetBrains Mono', monospace; font-size:0.6rem; color:var(--ink-dim);
-    text-align:center; margin-top:8px; text-transform:uppercase; letter-spacing:0.5px;
-    opacity:0.75;
-  }
+  .pack-slot-rarity{font-family:'JetBrains Mono', monospace; font-size:0.64rem; color:var(--ink-dim); margin-top:6px; text-transform:uppercase; letter-spacing:0.3px;}
 
   @media (max-width:380px){
     section{padding:60px 16px;}
@@ -390,12 +351,12 @@
   /* ===== CENTERED GLOW EFFECT ON SELECTED/HOVERED CARDS ===== */
   /* Ensure card-like elements can anchor the glow pseudo-element */
   .stat, .loop-step, .pack-card, .result-card, .code-card, .tip,
-  .pack-slot.real, .pet-tile {
+  .pet-card {
     position:relative;
   }
   /* Radial glow emanating from the center of each card */
   .stat::before, .loop-step::before, .pack-card::before, .result-card::before,
-  .code-card::before, .tip::before, .pack-slot.real::before, .pet-tile::before {
+  .code-card::before, .tip::before, .pet-card::before {
     content:"";
     position:absolute;
     top:50%; left:50%;
@@ -409,18 +370,18 @@
   }
   /* Show glow on hover for interactive cards */
   .stat:hover::before, .pack-card:hover::before, .code-card:hover::before,
-  .tip:hover::before, .pack-slot.real:hover::before, .pet-tile:hover::before {
+  .tip:hover::before, .pet-card:hover::before {
     opacity:1;
   }
   /* Show glow on active/selected states */
-  .pack-card.active::before,
+  .pack-card.active::before, .pet-card.selected::before,
   .result-card.ready::before, .result-card.short::before {
     opacity:1;
   }
   /* Raise text content above the glow layer */
   .stat > *, .loop-step > *, .pack-card > *, .result-card > *,
   .code-card > .code, .code-card > .desc, .code-card > .hint,
-  .tip > *, .pack-slot.real > *, .pet-tile > * {
+  .tip > *, .pet-card > * {
     position:relative; z-index:1;
   }
   /* Button-style elements get a box-shadow glow (text has no wrapper to z-index) */
@@ -440,7 +401,7 @@
   [data-theme="dark"] .stat::before, [data-theme="dark"] .loop-step::before,
   [data-theme="dark"] .pack-card::before, [data-theme="dark"] .result-card::before,
   [data-theme="dark"] .code-card::before, [data-theme="dark"] .tip::before,
-  [data-theme="dark"] .pack-slot.real::before, [data-theme="dark"] .pet-tile::before {
+  [data-theme="dark"] .pet-card::before {
     background:radial-gradient(circle at center, rgba(255,210,63,0.3) 0%, rgba(255,106,69,0.1) 35%, transparent 60%);
   }
 
@@ -1539,14 +1500,21 @@ function buildPackGrid(){
     card.id = `packCard${i}`;
     card.innerHTML = info
       ? `
-        ${info.cover ? `<img src="${info.cover}" alt="${info.name}" class="pack-cover-img">` : `<div class="pack-icon">${info.icon}</div>`}
-        <div class="pack-name">${info.name}</div>
-        <div class="pack-sub">${info.cost}</div>
+        <div class="pack-cover-wrap">
+          ${info.cover ? `<img src="${info.cover}" alt="${info.name}" class="pack-cover-img">` : `<div class="pack-icon">${info.icon}</div>`}
+        </div>
+        <div class="pack-card-body">
+          <div class="pack-name">${info.name}</div>
+          <div class="pack-sub">${info.cost}</div>
+          <div class="pack-pet-count">${info.cards.length} pets</div>
+        </div>
       `
       : `
         <div class="pack-icon">📦</div>
-        <div class="pack-name">Pack ${i}</div>
-        <div class="pack-sub">Placeholder</div>
+        <div class="pack-card-body">
+          <div class="pack-name">Pack ${i}</div>
+          <div class="pack-sub">Placeholder</div>
+        </div>
       `;
     card.addEventListener('click', () => showPackDetail(i));
     grid.appendChild(card);
@@ -1557,82 +1525,42 @@ function buildPackGrid(){
 let selectedCardIndex = null;
 
 function renderPackSlots(info, quality){
-  let readoutHtml = `<div class="pet-readout-empty">Tap a pet above to see its rarity, stats, and odds.</div>`;
-  if(selectedCardIndex !== null && info.cards[selectedCardIndex]){
-    const c = info.cards[selectedCardIndex];
-    const rc = RARITY_COLORS[c.rarity] || RARITY_COLORS.Common;
-    const { stats, odds } = formatCardStats(c, quality);
-    readoutHtml = `
-      <div class="pet-readout" style="border-color:${rc.bg};">
-        <span class="pack-slot-badge" style="background:${rc.bg}; color:${rc.text};">${c.rarity}</span>
-        <div class="pet-readout-name">${c.name}</div>
-        <div class="pack-slot-stats">${stats}</div>
-        <div class="pack-slot-rarity">${odds}</div>
-      </div>
-    `;
-  }
-
-  // Whole-image hotspot mode: one illustration, invisible clickable regions per pet.
-  if(info.fullImage && info.cards.every(c => c.hotspot)){
-    const filter = QUALITY_FILTERS[quality] || "none";
-    const rainbowOverlay = quality === "Rainbow" ? `<div class="rainbow-overlay"></div>` : '';
-    const imgStyle = quality === "Rainbow" ? '' : ` style="filter:${filter};"`;
-    const hotspots = info.cards.map((c, i) => {
-      const h = c.hotspot;
-      const sel = selectedCardIndex === i;
-      return `<div class="pet-hotspot${sel ? ' selected' : ''}" data-card-index="${i}" style="left:${h.left}%; top:${h.top}%; width:${h.width}%; height:${h.height}%; --bg-img:url('${info.fullImage}'); --bg-size-x:${10000/h.width}%; --bg-size-y:${10000/h.height}%; --bg-pos-x:-${h.left/(100-h.width)*100}%; --bg-pos-y:-${h.top/(100-h.height)*100}%; --pet-filter:${quality === 'Rainbow' ? 'none' : filter};"></div>`;
-    }).join('');
-    return `
-      <div class="pet-image-wrap">
-        <img src="${info.fullImage}" alt="${info.name} pets" class="pet-full-image"${imgStyle}>
-        ${rainbowOverlay}
-        ${hotspots}
-      </div>
-      <div class="pet-readout-wrap">${readoutHtml}</div>
-    `;
-  }
+  const filter = QUALITY_FILTERS[quality] || "none";
+  const rainbowOverlay = quality === "Rainbow" ? `<div class="rainbow-overlay"></div>` : '';
+  const imgFilter = quality === "Rainbow" ? '' : ` style="filter:${filter};"`;
 
   const grid = info.cards.map((c, i) => {
     const rc = RARITY_COLORS[c.rarity] || RARITY_COLORS.Common;
-    const filter = QUALITY_FILTERS[quality] || "none";
-    const rainbowOverlay = quality === "Rainbow" ? `<div class="rainbow-overlay"></div>` : '';
-    const imgFilter = quality === "Rainbow" ? '' : ` style="filter:${filter};"`;
-    const iconHtml = c.img
-      ? `<img src="${c.img}" alt="${c.name}" class="pack-slot-img"${imgFilter}>`
-      : `<div class="pack-slot-icon">🐾</div>`;
+    const { stats, odds } = formatCardStats(c, quality);
     const selected = selectedCardIndex === i;
-    const selectedGlow = selected ? `box-shadow:0 0 0 3px ${rc.bg}, 0 0 16px ${rc.bg}99;` : '';
+    const iconHtml = c.img
+      ? `<img src="${c.img}" alt="${c.name}" class="pet-card-img"${imgFilter}>`
+      : `<div class="pack-slot-icon">🐾</div>`;
     return `
-      <div class="pet-tile${selected ? ' selected' : ''}" data-card-index="${i}" style="background:${rc.square}; border-bottom:2px solid rgba(0,0,0,0.4); ${selectedGlow}">
-        <div class="pack-slot-img-wrap">
+      <div class="pet-card${selected ? ' selected' : ''}" data-card-index="${i}"${selected ? ` style="border-color:${rc.bg};"` : ''}>
+        <div class="pet-card-img-wrap">
           ${iconHtml}
           ${rainbowOverlay}
+        </div>
+        <div class="pet-card-info">
+          <span class="rarity-badge" style="background:${rc.bg}; color:${rc.text};">${c.rarity}</span>
+          <div class="pet-card-name">${c.name}</div>
+          <div class="pet-card-stats">${stats}</div>
+          <div class="pet-card-odds">${odds}</div>
         </div>
       </div>
     `;
   }).join('');
 
-  return `
-    <div class="pet-grid">${grid}</div>
-    <div class="pet-readout-wrap">${readoutHtml}</div>
-  `;
+  return `<div class="pet-grid">${grid}</div>`;
 }
 
 function wirePackSlotClicks(packNum){
   const container = document.getElementById('packSlots');
   if(!container) return;
-  container.querySelectorAll('.pet-hotspot').forEach(spot => {
-    spot.addEventListener('click', () => {
-      const idx = parseInt(spot.dataset.cardIndex, 10);
-      selectedCardIndex = (selectedCardIndex === idx) ? null : idx;
-      const info = PACK_DATA[packNum];
-      container.innerHTML = renderPackSlots(info, currentPackQuality);
-      wirePackSlotClicks(packNum);
-    });
-  });
-  container.querySelectorAll('.pet-tile').forEach(tile => {
-    tile.addEventListener('click', () => {
-      const idx = parseInt(tile.dataset.cardIndex, 10);
+  container.querySelectorAll('.pet-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const idx = parseInt(card.dataset.cardIndex, 10);
       selectedCardIndex = (selectedCardIndex === idx) ? null : idx;
       const info = PACK_DATA[packNum];
       container.innerHTML = renderPackSlots(info, currentPackQuality);
