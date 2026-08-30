@@ -1581,7 +1581,7 @@ function renderPackSlots(info, quality){
     const hotspots = info.cards.map((c, i) => {
       const h = c.hotspot;
       const sel = selectedCardIndex === i;
-      return `<div class="pet-hotspot${sel ? ' selected' : ''}" data-card-index="${i}" style="left:${h.left}%; top:${h.top}%; width:${h.width}%; height:${h.height}%; --bg-img:url('${info.fullImage}'); --bg-size-x:${100/h.width}%; --bg-size-y:${100/h.height}%; --bg-pos-x:-${h.left/h.width*100}%; --bg-pos-y:-${h.top/h.height*100}%; --pet-filter:${quality === 'Rainbow' ? 'none' : filter};"></div>`;
+      return `<div class="pet-hotspot${sel ? ' selected' : ''}" data-card-index="${i}" style="left:${h.left}%; top:${h.top}%; width:${h.width}%; height:${h.height}%; --bg-img:url('${info.fullImage}'); --bg-size-x:${10000/h.width}%; --bg-size-y:${10000/h.height}%; --bg-pos-x:-${h.left/(100-h.width)*100}%; --bg-pos-y:-${h.top/(100-h.height)*100}%; --pet-filter:${quality === 'Rainbow' ? 'none' : filter};"></div>`;
     }).join('');
     return `
       <div class="pet-image-wrap">
