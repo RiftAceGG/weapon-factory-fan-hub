@@ -1351,7 +1351,7 @@ if(recipeNote){
    2-20 are still placeholders; swap in real names/odds/pools
    the same way as Pack 1 once you've got them.
 ============================================================ */
-const PACK_COUNT = 20;
+const PACK_COUNT = 24;
 const PLACEHOLDER_RARITIES = ["Common","Uncommon","Rare","Epic","Legendary"];
 const PLACEHOLDER_SLOT_COUNT = 5;
 
@@ -1460,12 +1460,6 @@ PACK_DATA[3] = {
   ]
 };
 
-// Placeholder packs with themed names (packs 4-7)
-PACK_DATA[4] = { name: "Frost Pack", icon: "❄️", cover: null, cost: "$1Qn", fullImage: null, cards: [] };
-PACK_DATA[5] = { name: "Shadow Pack", icon: "🌑", cover: null, cost: "$1Sx", fullImage: null, cards: [] };
-PACK_DATA[6] = { name: "Cosmic Pack", icon: "🌌", cover: null, cost: "$1Oc", fullImage: null, cards: [] };
-PACK_DATA[7] = { name: "Inferno Pack", icon: "🔥", cover: null, cost: "$1No", fullImage: null, cards: [] };
-
 // Quality variants — apply on top of a card's base stats/odds.
 const QUALITIES = ["Normal","Golden","Shiny","Rainbow","Void"];
 const QUALITY_STAT_MULT = { Normal:1, Golden:1.5, Shiny:2, Rainbow:4, Void:8 };
@@ -1537,10 +1531,10 @@ function buildPackGrid(){
         </div>
       `
       : `
-        <div class="pack-icon">${PACK_DATA[i] ? PACK_DATA[i].icon : "📦"}</div>
+        <div class="pack-icon">📦</div>
         <div class="pack-card-body">
-          <div class="pack-name">${PACK_DATA[i] ? PACK_DATA[i].name : "Pack " + i}</div>
-          <div class="pack-sub">${PACK_DATA[i] ? PACK_DATA[i].cost : "Placeholder"}</div>
+          <div class="pack-name">Pack ${i}</div>
+          <div class="pack-sub">Placeholder</div>
         </div>
       `;
     card.addEventListener('click', () => showPackDetail(i));
@@ -1662,7 +1656,7 @@ function showPackDetail(packNum){
   const info = PACK_DATA[packNum];
   let titleHtml, introHtml, slotsHtml, qualityHtml = '';
 
-    if(info && info.cards && info.cards.length > 0){   currentPackQuality = "Normal";
+    if(info){   currentPackQuality = "Normal";
     selectedCardIndex = null;
     titleHtml = info.cover
       ? `<img src="${info.cover}" alt="${info.name}" class="pack-detail-cover">${info.name}`
@@ -1671,9 +1665,8 @@ function showPackDetail(packNum){
     slotsHtml = renderPackSlots(info, currentPackQuality);
     qualityHtml = `<div class="quality-selector" id="qualitySelector">${renderQualitySelector(packNum)}</div>`;
   } else {
-    const phInfo = PACK_DATA[packNum];
-    titleHtml = phInfo ? `${phInfo.icon} ${phInfo.name}` : `📦 Pack ${packNum}`;
-    introHtml = `Placeholder — pet artwork and stats coming soon.`;
+    titleHtml = `📦 Pack ${packNum}`;
+    introHtml = `Placeholder contents — replace with this pack's real card pool, odds, and artwork once available.`;
     slotsHtml = Array.from({ length: PLACEHOLDER_SLOT_COUNT }, (_, i) => {
       const rarity = PLACEHOLDER_RARITIES[i % PLACEHOLDER_RARITIES.length];
       return `
