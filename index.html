@@ -276,12 +276,33 @@
   .pet-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(76px,1fr)); gap:14px;}
   .pet-image-wrap{position:relative; width:100%; max-width:680px; margin:0 auto; line-height:0;}
   .pet-full-image{width:100%; height:auto; display:block; border-radius:16px; box-shadow:0 4px 24px rgba(0,0,0,0.08);}
-  .pet-hotspot{position:absolute; cursor:pointer; transition:background .15s ease; border-radius:14px;}
-  .pet-hotspot:hover{background:rgba(255,255,255,0.08);}
-  .pet-hotspot::after{content:""; position:absolute; inset:3px; border:3px solid transparent; border-radius:12px; pointer-events:none; transition:border-color .2s ease, box-shadow .2s ease;}
-  .pet-hotspot:hover::after{border-color:rgba(255,199,0,0.35);}
-  .pet-hotspot.selected{background:rgba(255,199,0,0.05);}
-  .pet-hotspot.selected::after{border-color:var(--yellow); box-shadow:0 0 18px rgba(255,199,0,0.4), inset 0 0 16px rgba(255,199,0,0.06);}
+  .pet-hotspot{position:absolute; cursor:pointer;}
+  .pet-hotspot:hover{background:rgba(255,255,255,0.04);}
+  .pet-hotspot::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:var(--bg-img);
+    background-size:var(--bg-size-x) var(--bg-size-y);
+    background-position:var(--bg-pos-x) var(--bg-pos-y);
+    filter:var(--pet-filter, none);
+    border-radius:14px;
+    opacity:0;
+    transform:scale(1) translateY(0);
+    transition:transform .3s cubic-bezier(0.34,1.56,0.64,1), opacity .2s ease, box-shadow .3s ease;
+    pointer-events:none;
+    z-index:5;
+  }
+  .pet-hotspot:hover::before{
+    opacity:1;
+    transform:scale(1.04) translateY(-4px);
+    box-shadow:0 6px 16px rgba(0,0,0,0.2);
+  }
+  .pet-hotspot.selected::before{
+    opacity:1;
+    transform:scale(1.1) translateY(-10px);
+    box-shadow:0 14px 32px rgba(0,0,0,0.4), 0 0 0 3px var(--yellow), 0 0 20px rgba(255,199,0,0.3);
+  }
   .pet-tile{
     cursor:pointer; border-radius:10px; padding:3px; transition:transform .12s;
     display:flex; align-items:center; justify-content:center;
@@ -1560,7 +1581,7 @@ function renderPackSlots(info, quality){
     const hotspots = info.cards.map((c, i) => {
       const h = c.hotspot;
       const sel = selectedCardIndex === i;
-      return `<div class="pet-hotspot${sel ? ' selected' : ''}" data-card-index="${i}" style="left:${h.left}%; top:${h.top}%; width:${h.width}%; height:${h.height}%;"></div>`;
+      return `<div class="pet-hotspot${sel ? ' selected' : ''}" data-card-index="${i}" style="left:${h.left}%; top:${h.top}%; width:${h.width}%; height:${h.height}%; --bg-img:url('${info.fullImage}'); --bg-size-x:${100/h.width}%; --bg-size-y:${100/h.height}%; --bg-pos-x:-${h.left/h.width*100}%; --bg-pos-y:-${h.top/h.height*100}%; --pet-filter:${quality === 'Rainbow' ? 'none' : filter};"></div>`;
     }).join('');
     return `
       <div class="pet-image-wrap">
