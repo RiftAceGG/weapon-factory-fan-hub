@@ -282,6 +282,7 @@
 
   .pet-card-img-wrap{position:relative; width:100%; aspect-ratio:1; background:var(--panel-2); overflow:hidden; border-bottom:2px solid var(--ink);}
   .pet-card-img{width:100%; height:100%; object-fit:contain; padding:6px; position:relative; z-index:1;}
+  .pet-card-bg{position:absolute; top:0; left:0; width:100%; height:100%; background-repeat:no-repeat; z-index:1;}
 
   .pet-card-info{padding:8px 10px 12px;}
   .rarity-badge{
@@ -1393,7 +1394,7 @@ const PACK_DATA = {
     icon: "🔴",
     cover: PACK_COVER_IMAGE,
     cost: "$1M",
-    fullImage: RED_FULL_IMAGE,
+    fullImage: "red-pack.png",
     cards: [
       { name:"Red Cat",                rarity:"Common",   moneyMult:1.05, expMult:1.05, oddsDenom:1.65,      img:PET_IMAGES.redCat,      hotspot:{left:1.00, top:4.00, width:19.20, height:92.00} },
       { name:"Red Dog",                rarity:"Uncommon", moneyMult:1.1,  expMult:1.1,  oddsDenom:3.4,       img:PET_IMAGES.redDog,      hotspot:{left:20.70, top:4.00, width:19.20, height:92.00} },
@@ -1407,7 +1408,7 @@ const PACK_DATA = {
     icon: "💎",
     cover: GEODE_COVER_IMAGE,
     cost: "$1T",
-    fullImage: GEODE_FULL_IMAGE,
+    fullImage: "geode-pack.png",
     cards: [
       { name:"Amethyst Bat",     rarity:"Common",   moneyMult:1.1,  expMult:1.1,  oddsDenom:1.65,      img:GEODE_PET_IMAGES.amethystBat,     hotspot:{left:1.50, top:2.00, width:23.50, height:47.50} },
       { name:"Ruby Spider",      rarity:"Uncommon", moneyMult:1.25, expMult:1.25, oddsDenom:3.4,       img:GEODE_PET_IMAGES.rubySpider,      hotspot:{left:26.00, top:2.00, width:23.50, height:47.50} },
@@ -1426,7 +1427,7 @@ PACK_DATA[3] = {
   icon: "🎃",
   cover: MONSTER_COVER_IMAGE,
   cost: "$1Qd",
-  fullImage: MONSTER_FULL_IMAGE,
+  fullImage: "monster-pack.png",
   cards: [
     { name:"Zombie Dog",      rarity:"Common",   moneyMult:1.2,  expMult:1.2,  oddsDenom:1.65,     img:MONSTER_PET_IMAGES.zombieDog,     hotspot:{left:2.00, top:2.00, width:23.25, height:47.50} },
     { name:"Skeleton Cat",    rarity:"Uncommon", moneyMult:1.5,  expMult:1.5,  oddsDenom:3.4,      img:MONSTER_PET_IMAGES.skeletonCat,   hotspot:{left:26.25, top:2.00, width:23.25, height:47.50} },
@@ -1526,21 +1527,35 @@ let selectedCardIndex = null;
 
 function renderPackSlots(info, quality){
   const filter = QUALITY_FILTERS[quality] || "none";
-  const rainbowOverlay = quality === "Rainbow" ? `<div class="rainbow-overlay"></div>` : '';
-  const imgFilter = quality === "Rainbow" ? '' : ` style="filter:${filter};"`;
 
   const grid = info.cards.map((c, i) => {
     const rc = RARITY_COLORS[c.rarity] || RARITY_COLORS.Common;
     const { stats, odds } = formatCardStats(c, quality);
     const selected = selectedCardIndex === i;
-    const iconHtml = c.img
-      ? `<img src="${c.img}" alt="${c.name}" class="pet-card-img"${imgFilter}>`
-      : `<div class="pack-slot-icon">🐾</div>`;
+
+    // Use background-image cropping from the group image if available
+    let imgHtml;
+    if(info.fullImage && c.hotspot){
+      const h = c.hotspot;
+      const bgFilter = quality === "Rainbow" ? 'none' : filter;
+      const rainbowOverlay = quality === "Rainbow" ? `<div class="rainbow-overlay"></div>` : '';
+      imgHtml = `
+        <div class="pet-card-bg" style="background-image:url('${info.fullImage}'); background-size:${10000/h.width}% ${10000/h.height}%; background-position:${h.left/(100-h.width)*100}% ${h.top/(100-h.height)*100}%; filter:${bgFilter};"></div>
+        ${rainbowOverlay}
+      `;
+    } else {
+      const imgFilter = quality === "Rainbow" ? '' : ` style="filter:${filter};"`;
+      const rainbowOverlay = quality === "Rainbow" ? `<div class="rainbow-overlay"></div>` : '';
+      const iconHtml = c.img
+        ? `<img src="${c.img}" alt="${c.name}" class="pet-card-img"${imgFilter}>`
+        : `<div class="pack-slot-icon">🐾</div>`;
+      imgHtml = `${iconHtml}${rainbowOverlay}`;
+    }
+
     return `
       <div class="pet-card${selected ? ' selected' : ''}" data-card-index="${i}"${selected ? ` style="border-color:${rc.bg};"` : ''}>
         <div class="pet-card-img-wrap">
-          ${iconHtml}
-          ${rainbowOverlay}
+          ${imgHtml}
         </div>
         <div class="pet-card-info">
           <span class="rarity-badge" style="background:${rc.bg}; color:${rc.text};">${c.rarity}</span>
