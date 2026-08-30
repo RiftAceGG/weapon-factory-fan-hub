@@ -284,6 +284,20 @@
     pointer-events:none;
   }
 
+  /* Rainbow background overlay for Rainbow quality */
+  .pet-hotspot-rainbow{
+    position:absolute; inset:0; pointer-events:none; z-index:0;
+    background:linear-gradient(135deg,
+      rgba(255,95,109,0.55),
+      rgba(255,195,113,0.55),
+      rgba(246,243,122,0.55),
+      rgba(74,222,128,0.55),
+      rgba(56,189,248,0.55),
+      rgba(129,140,248,0.55),
+      rgba(192,132,252,0.55));
+    mix-blend-mode:color;
+  }
+
   /* Readout panel below image */
   .pet-readout{
     margin-top:16px; background:var(--panel); border:2px solid var(--ink); border-radius:8px;
@@ -1541,9 +1555,10 @@ function renderPackSlots(info, quality){
     const h = c.hotspot;
     if(!h) return '';
     const selected = selectedCardIndex === i;
+    const rainbowBg = quality === "Rainbow" ? '<div class="pet-hotspot-rainbow"></div>' : '';
     return `<div class="pet-hotspot${selected ? ' selected' : ''}" data-card-index="${i}"
       style="left:${h.left}%; top:${h.top}%; width:${h.width}%; height:${h.height}%;"
-      title="${c.name}"></div>`;
+      title="${c.name}">${rainbowBg}</div>`;
   }).join('');
 
   // Build readout panel for selected pet (or hint text)
