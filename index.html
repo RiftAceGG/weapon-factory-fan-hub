@@ -1460,6 +1460,27 @@ PACK_DATA[3] = {
   ]
 };
 
+// Cloud Pack (pack 14)
+PACK_DATA[14] = {
+  name: "Cloud Pack",
+  icon: "☁️",
+  cover: "cloud-cover.png",
+  cost: "$1Qn",
+  fullImage: "cloud-pack.png",
+  cards: [
+    { name:"Cloud Dog",          rarity:"Common",   moneyMult:19,     expMult:19,     oddsDenom:1.65,       hotspot:{left:0.80, top:1.00, width:18.80, height:48.30} },
+    { name:"Cloud Cat",          rarity:"Uncommon", moneyMult:28,     expMult:28,     oddsDenom:3.4,        hotspot:{left:20.70, top:1.00, width:18.80, height:48.30} },
+    { name:"Cloud Bear",         rarity:"Rare",     moneyMult:47,     expMult:47,     oddsDenom:11,         hotspot:{left:40.60, top:1.00, width:18.80, height:48.30} },
+    { name:"Cloud Bunny",        rarity:"Epic",     moneyMult:75,     expMult:75,     oddsDenom:100,        hotspot:{left:60.50, top:1.00, width:18.80, height:48.30} },
+    { name:"Cloud Fox",          rarity:"Legendary",moneyMult:229.99, expMult:229.99, gemsMult:3, oddsDenom:5000,   hotspot:{left:80.40, top:1.00, width:18.80, height:48.30} },
+    { name:"Cloud Shark",        rarity:"Mythic",   moneyMult:950,    expMult:950,    gemsMult:4, oddsDenom:250000, hotspot:{left:0.80, top:50.70, width:18.80, height:48.30} },
+    { name:"Rain Cloud Stingray",rarity:"Divine",   moneyMult:1900,   expMult:1900,   gemsMult:5, oddsDenom:2000000, hotspot:{left:20.70, top:50.70, width:18.80, height:48.30} },
+    { name:"Storm Dragon",       rarity:"Divine",   moneyMult:9800,   expMult:9800,   gemsMult:15, oddsDenom:100000000, hotspot:{left:40.60, top:50.70, width:18.80, height:48.30} },
+    { name:"Storm Leviathan",    rarity:"Divine",   moneyMult:31250,  expMult:31250,  gemsMult:30, oddsDenom:500000000, hotspot:{left:60.50, top:50.70, width:18.80, height:48.30} },
+    { name:"Cloud",              rarity:"Secret",   moneyMult:46875,  expMult:46875,  oddsDenom:1000000000, hotspot:{left:80.40, top:50.70, width:18.80, height:48.30} }
+  ]
+};
+
 // Quality variants — apply on top of a card's base stats/odds.
 const QUALITIES = ["Normal","Golden","Shiny","Rainbow","Void"];
 const QUALITY_STAT_MULT = { Normal:1, Golden:1.5, Shiny:2, Rainbow:4, Void:8 };
